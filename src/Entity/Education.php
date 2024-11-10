@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\EducationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EducationRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EducationRepository::class)]
 class Education
@@ -14,12 +15,15 @@ class Education
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $year = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $institution = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $degree = null;
 
     #[ORM\ManyToOne(inversedBy: 'education')]

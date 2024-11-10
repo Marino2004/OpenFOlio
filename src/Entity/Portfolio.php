@@ -2,50 +2,61 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use App\Repository\PortfolioRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\PortfolioRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']]
+)]
 #[ORM\Entity(repositoryClass: PortfolioRepository::class)]
 class Portfolio
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['read'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private array $skills = [];
 
     /**
      * @var Collection<int, Education>
      */
     #[ORM\OneToMany(targetEntity: Education::class, mappedBy: 'portfolio', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['read'])]
     private Collection $education;
 
     /**
      * @var Collection<int, Experience>
      */
     #[ORM\OneToMany(targetEntity: Experience::class, mappedBy: 'portfolio', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['read'])]
     private Collection $experience;
 
     /**
      * @var Collection<int, Project>
      */
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'portfolio', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['read'])]
     private Collection $project;
 
     public function __construct()

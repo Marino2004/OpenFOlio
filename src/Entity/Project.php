@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -15,12 +16,15 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['read'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private array $technologies = [];
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $link = null;
 
     #[ORM\ManyToOne(inversedBy: 'project')]

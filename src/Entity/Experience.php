@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ExperienceRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ExperienceRepository::class)]
 class Experience
@@ -14,15 +15,19 @@ class Experience
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $year = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $position = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read'])]
     private ?string $company = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'experience')]
